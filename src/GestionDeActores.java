@@ -12,8 +12,13 @@ import java.text.SimpleDateFormat;
 public class GestionDeActores {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Actor> lista = new ArrayList<>();
+
+
+
     public static void main(String[] args) {
 
+        lista.add(actorAmateurPorDefecto());
+        lista.add(actorProfesionalPorDefecto());
 
         boolean salir=false;
         do{
@@ -854,5 +859,15 @@ public class GestionDeActores {
         System.out.println("11 - Actores superiores a un peso.");
         System.out.println("12 - Actor que más cobra");
         System.out.println("13 - Listado alfabético de actores.\n----------------------------------------");
+    }
+    private static Actor actorAmateurPorDefecto(){
+        Fecha f = new Fecha(23,04,1990);
+        Direccion d = new Direccion("España",34,1,'f',"45434","Elche","Alicante","España");
+        return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.CAUCASICO,60,21);
+    }
+    private static Profesional actorProfesionalPorDefecto(){
+        Fecha f = new Fecha(12,10,1942);
+        Direccion d = new Direccion("Tercios",12,4,'c',"67876","Mieres","Asturias","España");
+        return new Profesional("12345643J","Flavia",f,d,Genero.MUJER,"654354654",50,1.55,Raza.ORIENTAL,200,100,2);
     }
 }
