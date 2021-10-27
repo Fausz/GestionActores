@@ -4,7 +4,7 @@ public class Direccion {
     private int numero;
     private int piso;
     private char letra;
-    private int codigoPostal;
+    private String codigoPostal;
     private String poblacion;
     private String provincia;
     private String pais;
@@ -12,7 +12,7 @@ public class Direccion {
     public Direccion() {
     }
 
-    public Direccion(String nombreCalle, int numero, int piso, char letra, int codigoPostal, String poblacion, String provincia, String pais) {
+    public Direccion(String nombreCalle, int numero, int piso, char letra, String codigoPostal, String poblacion, String provincia, String pais) {
         this.nombreCalle = nombreCalle;
         this.numero = numero;
         this.piso = piso;
@@ -55,11 +55,11 @@ public class Direccion {
         this.letra = letra;
     }
 
-    public int getCodigoPostal() {
+    public String getCodigoPostal() {
         return codigoPostal;
     }
 
-    public void setCodigoPostal(int codigoPostal) {
+    public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal = codigoPostal;
     }
 

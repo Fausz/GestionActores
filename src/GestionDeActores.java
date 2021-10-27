@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 
 public class GestionDeActores {
     static Scanner sc = new Scanner(System.in);
-    static ArrayList<Persona> lista = new ArrayList<>();
+    static ArrayList<Actor> lista = new ArrayList<>();
     public static void main(String[] args) {
 
 
@@ -55,7 +55,7 @@ public class GestionDeActores {
                 System.out.println("Aumentar representaciones a un actor profesional");
                 break;
             case 6:
-                System.out.println("Listado de actores y sueldo");
+                mostrarActores();
                 break;
             case 7:
                 System.out.println("Listado de actores menores de edad");
@@ -84,6 +84,20 @@ public class GestionDeActores {
         return false;
     }
 
+    private static void mostrarActores(){
+        if(lista.isEmpty()){
+            System.out.println("No hay Actores en la lista.");
+        }else {
+            for (Persona p : lista) {
+                if (p instanceof Amateur) {
+                    System.out.println(p.toString());
+                } else if (p instanceof Profesional) {
+                    System.out.println(p.toString());
+                }
+            }
+        }
+    }
+
     private static Actor añadirActor() {
         boolean salir = false;
         int tipo;
@@ -106,10 +120,12 @@ public class GestionDeActores {
                 System.out.println("Cancelar creacion de actor.");
                 break;
             case 1:
+                sc.nextLine();
                 System.out.println("Creación de Actor Amateur\n--------------------");
                 a = crearAmateur();
                 break;
             case 2:
+                sc.nextLine();
                 System.out.println("Crear profesional\n--------------------");
                 a = crearProfesional();
                 break;
@@ -215,8 +231,8 @@ public class GestionDeActores {
         double peso=0;
         double altura=0;
         Raza raza=Raza.HISPANO;
-        double importeHora=0;
-        int numeroHoras=0;
+        double importeHora=50;
+        int numeroHoras=10;
 
         do {
             //Datos de Persona
@@ -282,7 +298,7 @@ public class GestionDeActores {
         int numero = introducirNumeroDireccion();
         int piso = introducirPiso();
         char letra = introducirLetra();
-        int codigoPostal = introducirCodigoPostal();
+        String codigoPostal = introducirCodigoPostal();
         String poblacion = introducirPoblacion();
         String provincia = introducirProvincia();
         String pais = introducirPais();
@@ -308,6 +324,7 @@ public class GestionDeActores {
     }
 
     private static String introducirPoblacion(){
+
         String poblacion;
         do{
             System.out.println("Introduce la poblacion: ");
@@ -316,17 +333,29 @@ public class GestionDeActores {
         return poblacion;
     }
 
-    private static int introducirCodigoPostal(){
-        int codigoPostal;
+    private static String introducirCodigoPostal(){
+        String codigoPostal;
         do{
-            System.out.println("Introduce el codigo postal");
-            codigoPostal = introducirNumeroEntero();
-        }while(!comprobarCodigoPostal(codigoPostal));
+            System.out.println("Introduce el codigo postal: ");
+            codigoPostal = sc.nextLine();
+        }while(!comprobarDigitosCodigoPostal(codigoPostal) || !comprobarTamañoCodigoPostal(codigoPostal));
         return codigoPostal;
     }
 
-    private static boolean comprobarCodigoPostal(int codigoPostal){
-        if(codigoPostal!=5){
+    private static boolean comprobarDigitosCodigoPostal(String codigoPostal){
+        boolean correcto = false;
+        for(int i = 0;i<codigoPostal.length();i++) {
+            char c = codigoPostal.charAt(i);
+            if (c=='0' || c=='1' ||c=='2' ||c=='3' ||c=='4' ||c=='5' ||c=='6' ||c=='7' ||c=='8' ||c=='9') {
+                correcto = true;
+
+            }
+        }
+        return correcto;
+    }
+    private static boolean comprobarTamañoCodigoPostal(String codigoPostal){
+        if(codigoPostal.length()!=5){
+            System.out.println("No has introducido 5 digitos para el codigo postal.");
             return false;
         }else{
             return true;
@@ -379,6 +408,7 @@ public class GestionDeActores {
         return numero;
     }
     private static String introducirNombreCalle(){
+        sc.nextLine();
         String nombreCalle;
         do {
             System.out.println("Introducir el nombre de la calle: ");
@@ -396,7 +426,7 @@ public class GestionDeActores {
         res=validarFecha(fecha);
 
         if(res==true && comprobarFechaPresente(dia,mes,año)){
-            System.out.println("La fecha es valida");
+
         }else {
             System.out.println("La fecha no es valida");
         }
@@ -435,6 +465,7 @@ public class GestionDeActores {
     private static int introducirAño(){
         int año;
         do{
+            System.out.println("Introduce el año de nacimiento: ");
             año = introducirNumeroEntero();
         }while (!comprobarRangoAño(año));
         return año;
@@ -459,6 +490,7 @@ public class GestionDeActores {
     private static int introducirMes(){
         int mes;
         do{
+            System.out.println("Introduce el mes de nacimiento: ");
             mes = introducirNumeroEntero();
         }while (!comprobarRangoMesesAño(mes));
         return mes;
@@ -475,6 +507,7 @@ public class GestionDeActores {
     private static int introducirDia(){
         int dia;
         do{
+            System.out.println("Introduce el dia de nacimiento: ");
             dia = introducirNumeroEntero();
         }while (!comprobarRangoDiasMes(dia));
         return dia;
@@ -501,10 +534,18 @@ public class GestionDeActores {
         do{
             System.out.println("Introduce el numero de telefono: ");
             telefono = sc.nextLine();
-        }while(!comprobarNumeros(telefono));
+        }while(!comprobarNumeros(telefono) || !comprobarTamañoTelefono(telefono));
         return telefono;
     }
 
+    private static boolean comprobarTamañoTelefono(String telefono){
+        if(telefono.length()!=9){
+            System.out.println("El telefono no tiene 9 digitos.");
+            return false;
+        }else{
+            return true;
+        }
+    }
     private static boolean comprobarNumeros(String cadena){
         char c;
         for(int i = 0; i<cadena.length();i++){
@@ -571,13 +612,28 @@ public class GestionDeActores {
     }
 
     private static String introducirDni(){
-        sc.nextLine();
         String dni;
         do {
             System.out.println("Introduce el DNI del Actor: ");
             dni = sc.nextLine();
-        }while(!validar(dni));
+        }while(!validar(dni) || !comprobarDNIRepetido(dni));
         return dni;
+    }
+
+    private static boolean comprobarDNIRepetido(String dni){
+        boolean encontrado=true;
+        if(lista.isEmpty()){
+            return true;
+        }else {
+            for (Persona p : lista) {
+                if (p.getDni().equals(dni)) {
+                    System.out.println("Este DNI ya está registrado.");
+                    encontrado = false;
+                    break;
+                }
+            }
+            return encontrado;
+        }
     }
 
     private static boolean validar(String dni){
@@ -643,9 +699,10 @@ public class GestionDeActores {
     }
 
     private static boolean cancelarCreación(){
+        sc.nextLine();
         String respuesta;
         do {
-            System.out.println("¿Desea cancelar la creacion de este Actor? (Y o N)");
+            System.out.println("¿Desea confiarmar la creacion de este Actor? (Y o N)");
             respuesta = sc.nextLine().toUpperCase();
         }while(!validarRespuesta(respuesta));
         return comprobarRespuesta(respuesta);
@@ -796,6 +853,6 @@ public class GestionDeActores {
         System.out.println("10 - Actores superiores a una altura.");
         System.out.println("11 - Actores superiores a un peso.");
         System.out.println("12 - Actor que más cobra");
-        System.out.println("13 - Listado alfabético de actores.");
+        System.out.println("13 - Listado alfabético de actores.\n----------------------------------------");
     }
 }

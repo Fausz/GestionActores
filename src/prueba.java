@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Scanner;
 import java.text.ParseException;
@@ -11,39 +12,25 @@ public class prueba {
     static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws ParseException {
 
-        char c = introducirLetra();
-        System.out.println(c);
+        long e = calcularEdad();
+        System.out.println(e);
 
     }
 
-    private static char introducirLetra(){
-        String letra;
-        do{
-            System.out.println("Introduce la letra del piso: ");
-            letra=sc.nextLine();
-        }while(!comprobarCharLetra(letra));
-        char c = letra.charAt(0);
-        return c;
+    public static long calcularEdad(){
+        LocalDate fNacimiento;
+        fNacimiento = LocalDate.of(1992, 11, 14);
+        //LocalDate fActual = LocalDate.now();
+       return ChronoUnit.YEARS.between(fNacimiento, LocalDate.now());
+        /*System.out.println("Tu edad es de " +
+                ChronoUnit.YEARS.between(fNacimiento, LocalDate.now())
+                + " años."
+        );*/
+
     }
-
-    private static boolean comprobarCharLetra(String letra){
-        char c = letra.charAt(0);
-        if(Character.isLetter(c) && letra.length()==1){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private static boolean comprobarChar(String texto){
-        if(texto.length()>1){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-
-
-
-
 }
+
+
+
+
+

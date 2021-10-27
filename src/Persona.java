@@ -1,6 +1,6 @@
 public abstract class Persona {
 
-    private String nif;
+    private String dni;
     private String nombre;
     private Fecha fechaNacimiento;
     private Direccion domicilio;
@@ -10,8 +10,8 @@ public abstract class Persona {
     public Persona() {
     }
 
-    public Persona(String nif, String nombre, Fecha fechaNacimiento, Direccion domicilio, Genero sexo, String telefono) {
-        this.nif = nif;
+    public Persona(String dni, String nombre, Fecha fechaNacimiento, Direccion domicilio, Genero sexo, String telefono) {
+        this.dni = dni;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
@@ -19,12 +19,12 @@ public abstract class Persona {
         this.telefono = telefono;
     }
 
-    public String getNif() {
-        return nif;
+    public String getDni() {
+        return dni;
     }
 
-    public void setNif(String nif) {
-        this.nif = nif;
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
