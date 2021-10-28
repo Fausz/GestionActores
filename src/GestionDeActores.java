@@ -13,8 +13,6 @@ public class GestionDeActores {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Actor> lista = new ArrayList<>();
 
-
-
     public static void main(String[] args) {
 
         lista.add(actorAmateurPorDefecto());
@@ -61,15 +59,20 @@ public class GestionDeActores {
                 }
                 break;
             case 3:
-                boolean cambio = cambioTipoAmateurAProfesional();
-                if(cambio){
+                boolean cambioTipo = cambioTipoAmateurAProfesional();
+                if(cambioTipo){
                     System.out.println("Se ha realizado el cambio correctamente.");
                 }else{
                     System.out.println("No se ha realizado ningun cambio.");
                 }
                 break;
             case 4:
-                System.out.println("Aumentar horas a un actor amateur");
+                boolean cambioHoras = cambiarHorasAmateur();
+                if(cambioHoras){
+                    System.out.println("Se han cambiado las horas que interpreta un Actor Amateur");
+                }else{
+                    System.out.println("No se han cambiado las horas que interpreta un Actor Amateur");
+                }
                 break;
             case 5:
                 System.out.println("Aumentar representaciones a un actor profesional");
@@ -102,6 +105,47 @@ public class GestionDeActores {
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+
+    private static boolean cambiarHorasAmateur(){
+        sc.nextLine();
+        boolean encontrado;
+        String dni;
+        do {
+            mostrarActoresAmateur();
+            dni = introducirDniParaBuscarActor();
+            if(dni.equals("0")){
+                return false;
+            }
+            encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado);
+        Actor a = obtenerActor(dni);
+        if(a instanceof Amateur){
+            System.out.println("El numero de horas actuales es de: "+((Amateur) a).getNumeroHoras());
+        }
+
+        int horas = introducirNumeroHoras();
+        sc.nextLine();
+        if(a instanceof Amateur){
+            ((Amateur) a).setNumeroHoras(horas);
+        }
+        boolean confirmar = confirmarAccion();
+        if(confirmar) {
+            lista.remove(a);
+            lista.add(a);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    private static void mostrarActoresAmateur(){
+        for(Actor a : lista){
+            if(a instanceof Amateur){
+                System.out.println(a.toString());
+            }
+        }
     }
     private static boolean cambioTipoAmateurAProfesional(){
         sc.nextLine();
@@ -150,6 +194,7 @@ public class GestionDeActores {
         boolean encontrado;
         String dni;
         do {
+            mostrarTodosActores();
             dni = introducirDniParaBuscarActor();
             if(dni.equals("0")){
                 return null;
@@ -178,9 +223,6 @@ public class GestionDeActores {
     private static String introducirDniParaBuscarActor(){
         String dni;
         do {
-            for(Actor a : lista){
-                System.out.println(a.toString());
-            }
             System.out.println("Introduce el DNI del Actor (0 para salir): ");
             dni = sc.nextLine();
         }while(!validar(dni) && !dni.equals("0"));
