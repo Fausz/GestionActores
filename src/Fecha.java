@@ -39,7 +39,7 @@ public class Fecha {
 
     @Override
     public String toString() {
-        return ", {" +
+        return " {" +
                 "dia=" + dia +
                 ", mes=" + mes +
                 ", año=" + año +

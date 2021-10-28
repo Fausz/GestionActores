@@ -90,13 +90,14 @@ public class Direccion {
     @Override
     public String toString() {
         return
-                "nombreCalle='" + nombreCalle + '\'' +
+                "{ nombreCalle='" + nombreCalle + '\'' +
                 ", numero=" + numero +
                 ", piso=" + piso +
                 ", letra=" + letra +
                 ", codigoPostal=" + codigoPostal +
                 ", poblacion='" + poblacion + '\'' +
                 ", provincia='" + provincia + '\'' +
-                ", pais='" + pais + '\'';
+                ", pais='" + pais + '\''+
+                '}';
     }
 }

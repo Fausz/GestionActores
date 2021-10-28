@@ -71,11 +71,11 @@ public abstract class Persona {
     public String toString() {
 
         return
-                "dni='" + dni + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", fechaNacimiento=" + fechaNacimiento +
-                ", domicilio=" + domicilio +
-                ", sexo=" + sexo +
-                ", telefono='" + telefono + '\'';
+                "dni = '" + dni + '\'' +
+                ", nombre = '" + nombre + '\'' +
+                ", fechaNacimiento = " + fechaNacimiento +
+                ", domicilio = " + domicilio +
+                ", sexo = " + sexo +
+                ", telefono = '" + telefono + '\'';
     }
 }

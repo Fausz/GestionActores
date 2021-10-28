@@ -38,10 +38,8 @@ public abstract class Actor extends Persona{
 
         return
                 super.toString()+
-                "Actor{" +
-                "peso=" + peso +
-                ", altura=" + altura +
-                ", raza=" + raza +
-                '}';
+                "peso = " + peso +
+                ", altura = " + altura +
+                ", raza = " + raza;
     }
 }

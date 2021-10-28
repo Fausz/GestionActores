@@ -110,16 +110,16 @@ public class Profesional extends Actor{
 
 
     public String toStringListadoYSueldo() {
-        return "Actor tipo: Profesional, nombre: " + super.getNombre()+" ,sueldo:" + calcularSueldo();
+        return "Actor tipo: Profesional, nombre: " + super.getNombre()+", sueldo: " + calcularSueldo();
     }
 
     @Override
     public String toString() {
         return
                 super.toString()+
-                ", tipo = Profesional" +
-                "sueldoBase=" + sueldoBase +
-                ", precioPorRepresentacion=" + precioPorRepresentacion +
-                ", numeroDeRepresentaciones=" + numeroDeRepresentaciones;
+                ", tipo = PROFESIONAL" +
+                "sueldoBase = " + sueldoBase +
+                ", precioPorRepresentacion = " + precioPorRepresentacion +
+                ", numeroDeRepresentaciones = " + numeroDeRepresentaciones;
     }
 }

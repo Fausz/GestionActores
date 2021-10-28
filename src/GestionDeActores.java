@@ -61,7 +61,12 @@ public class GestionDeActores {
                 }
                 break;
             case 3:
-                System.out.println("Cambio de amateur a profesional");
+                boolean cambio = cambioTipoAmateurAProfesional();
+                if(cambio){
+                    System.out.println("Se ha realizado el cambio correctamente.");
+                }else{
+                    System.out.println("No se ha realizado ningun cambio.");
+                }
                 break;
             case 4:
                 System.out.println("Aumentar horas a un actor amateur");
@@ -98,7 +103,49 @@ public class GestionDeActores {
         }
         return false;
     }
+    private static boolean cambioTipoAmateurAProfesional(){
+        sc.nextLine();
+        boolean encontrado;
+        String dni;
+        do {
+            dni = introducirDniParaBuscarActor();
+            if(dni.equals("0")){
+                return false;
+            }
+            encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado);
 
+        Actor a = obtenerActor(dni);
+        Actor cambio = cambiarTipo(a);
+        System.out.println("Datos antiguos:\n"+a.toString()+"\n");
+        System.out.println("Datos nuevos: \n"+cambio.toString()+"\n");
+        boolean confirmacion = confirmarAccion();
+        if(confirmacion){
+            lista.remove(a);
+            lista.add(cambio);
+            return true;
+        }
+        return false;
+    }
+
+    private static Actor cambiarTipo(Actor a){
+
+        String dni = a.getDni();
+        String nombre = a.getNombre();
+        Fecha f = a.getFechaNacimiento();
+        Direccion d = a.getDomicilio();
+        Genero g = a.getSexo();
+        String telefono = a.getTelefono();
+        double peso = a.peso;
+        double altura = a.altura;
+        Raza r = a.raza;
+        double sueldoBase = introducirSueldoBase();
+        double precioPorRepresentacion = introducirPrecioPorRepresentacion();
+        int numeroRepresentaciones = introducirNumeroDeRepresentaciones();
+        sc.nextLine();
+        return new Profesional(dni,nombre,f,d,g,telefono,peso,altura,r,sueldoBase,precioPorRepresentacion,numeroRepresentaciones);
+
+    }
     private static Actor eliminarActor(){
         boolean encontrado;
         String dni;
