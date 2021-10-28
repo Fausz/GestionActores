@@ -124,8 +124,21 @@ public class Amateur extends Actor{
         this.sueldo = sueldo;
     }
 
+
+    public String toStringListadoYSueldo() {
+        return "Actor tipo: Amateur, " + " nombre: " + super.getNombre() + ", sueldo: " + sueldo ;
+    }
+
     @Override
     public String toString() {
-        return "Actor tipo: Amateur, " + " nombre: " + super.getNombre() + ", sueldo: " + sueldo ;
+        return
+                super.toString()+
+                " tipo = Amateur, " +
+                "peso=" + peso +
+                ", altura=" + altura +
+                ", raza=" + raza +
+                ", importeHora=" + importeHora +
+                ", numeroHoras=" + numeroHoras +
+                ", sueldo=" + sueldo;
     }
 }

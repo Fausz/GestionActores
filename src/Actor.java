@@ -32,4 +32,16 @@ public abstract class Actor extends Persona{
         );*/
         return edad;
     }
+
+    @Override
+    public String toString() {
+
+        return
+                super.toString()+
+                "Actor{" +
+                "peso=" + peso +
+                ", altura=" + altura +
+                ", raza=" + raza +
+                '}';
+    }
 }

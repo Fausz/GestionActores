@@ -45,6 +45,7 @@ public class GestionDeActores {
                 if(a==null){
                     System.out.println("No se ha añadido el Actor.");
                 }else {
+                    System.out.println(a.toString());
                     lista.add(a);
                     System.out.println("Se ha añadido el actor a la lista.");
                 }
@@ -108,8 +109,13 @@ public class GestionDeActores {
             }
             encontrado = comprobarDNIEnLista(dni);
         }while(!encontrado);
+
         Actor a = obtenerActor(dni);
-        return a;
+        boolean confirmacion = confirmarAccion();
+        if(confirmacion){
+            return a;
+        }
+        return null;
     }
 
     private static Actor obtenerActor(String dni){
@@ -126,7 +132,7 @@ public class GestionDeActores {
         String dni;
         do {
             for(Actor a : lista){
-                System.out.println("DNI: "+a.getDni()+" del actor: "+a.toString());
+                System.out.println(a.toString());
             }
             System.out.println("Introduce el DNI del Actor (0 para salir): ");
             dni = sc.nextLine();
@@ -155,9 +161,9 @@ public class GestionDeActores {
         }else {
             for (Persona p : lista) {
                 if (p instanceof Amateur) {
-                    System.out.println(p.toString());
+                    System.out.println(((Amateur) p).toStringListadoYSueldo());
                 } else if (p instanceof Profesional) {
-                    System.out.println(p.toString());
+                    System.out.println(((Profesional) p).toStringListadoYSueldo());
                 }
             }
         }
@@ -235,9 +241,10 @@ public class GestionDeActores {
                 sueldoBase = introducirSueldoBase();
                 precioPorRepresentacion = introducirPrecioPorRepresentacion();
                 numeroDeRepresentaciones = introducirNumeroDeRepresentaciones();
+                sc.nextLine();
             }
 
-            cancelarCreacion = cancelarCreación();
+            cancelarCreacion = confirmarAccion();
         }while(!continuarCreacion && !cancelarCreacion);
 
         if(cancelarCreacion){
@@ -318,9 +325,10 @@ public class GestionDeActores {
                 //Datos de Amateur
                 importeHora = introducirImporteHora();
                 numeroHoras = introducirNumeroHoras();
+                sc.nextLine();
             }
 
-            cancelarCreacion = cancelarCreación();
+            cancelarCreacion = confirmarAccion();
         }while(!continuarCreacion && !cancelarCreacion);
 
         if(cancelarCreacion){
@@ -627,17 +635,20 @@ public class GestionDeActores {
         do {
             System.out.println("Introduce el genero del actor de las siguientes opciones:\n----------------------------- ");
 
-            Object [] possibleValues = Genero.values();
-            for (Object o : possibleValues) {
-                System.out.println(o.toString());
-            }
-
+            mostrarGeneros();
             genero = sc.nextLine().toUpperCase();
-
         }while(!comprobarGenero(genero));
         return Genero.valueOf(genero);
     }
 
+    private static void mostrarGeneros(){
+        Object [] possibleValues = Genero.values();
+        for (Object o : possibleValues) {
+            System.out.println(o.toString());
+        }
+
+
+    }
     private static boolean comprobarGenero(String genero){
         boolean encontrado=false;
         //METER EN UN ARRAY LAS RAZAS Y COMPRARAR EL VALOR CON TODOS LOS VALORES DEL ARRAY
@@ -763,11 +774,11 @@ public class GestionDeActores {
         return comprobarRespuesta(respuesta);
     }
 
-    private static boolean cancelarCreación(){
-        sc.nextLine();
+    private static boolean confirmarAccion(){
+
         String respuesta;
         do {
-            System.out.println("¿Desea confiarmar la creacion de este Actor? (Y o N)");
+            System.out.println("¿Desea confirmar la accion? (Y o N)");
             respuesta = sc.nextLine().toUpperCase();
         }while(!validarRespuesta(respuesta));
         return comprobarRespuesta(respuesta);
@@ -919,6 +930,12 @@ public class GestionDeActores {
         System.out.println("11 - Actores superiores a un peso.");
         System.out.println("12 - Actor que más cobra");
         System.out.println("13 - Listado alfabético de actores.\n----------------------------------------");
+
+    }
+    private static void mostrarTodosActores(){
+        for(Actor a : lista){
+            System.out.println(a.toString());
+        }
     }
     private static Actor actorAmateurPorDefecto(){
         Fecha f = new Fecha(23,04,1990);

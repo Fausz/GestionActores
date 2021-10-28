@@ -66,4 +66,16 @@ public abstract class Persona {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    @Override
+    public String toString() {
+
+        return
+                "dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", domicilio=" + domicilio +
+                ", sexo=" + sexo +
+                ", telefono='" + telefono + '\'';
+    }
 }

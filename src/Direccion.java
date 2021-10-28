@@ -89,7 +89,7 @@ public class Direccion {
 
     @Override
     public String toString() {
-        return "Direccion{" +
+        return
                 "nombreCalle='" + nombreCalle + '\'' +
                 ", numero=" + numero +
                 ", piso=" + piso +
@@ -97,7 +97,6 @@ public class Direccion {
                 ", codigoPostal=" + codigoPostal +
                 ", poblacion='" + poblacion + '\'' +
                 ", provincia='" + provincia + '\'' +
-                ", pais='" + pais + '\'' +
-                '}';
+                ", pais='" + pais + '\'';
     }
 }
