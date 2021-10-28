@@ -34,21 +34,30 @@ public class GestionDeActores {
     }
 
     private static boolean seleccionMenu(int opcion) {
+        Actor a;
         switch (opcion){
             case 0:
                 System.out.println("Fin del programa.");
                 return true;
             case 1:
                 //añadirActor();
-                Actor a = añadirActor();
+                a = añadirActor();
                 if(a==null){
                     System.out.println("No se ha añadido el Actor.");
                 }else {
                     lista.add(a);
+                    System.out.println("Se ha añadido el actor a la lista.");
                 }
                 break;
             case 2:
-                System.out.println("Bajas de actores");
+                sc.nextLine();
+                a = eliminarActor();
+                if(a==null){
+                    System.out.println("No se ha eliminado el actor");
+                }else{
+                    lista.remove(a);
+                    System.out.println("Se ha eliminado el actor de la lista.");
+                }
                 break;
             case 3:
                 System.out.println("Cambio de amateur a profesional");
@@ -87,6 +96,57 @@ public class GestionDeActores {
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+
+    private static Actor eliminarActor(){
+        boolean encontrado;
+        String dni;
+        do {
+            dni = introducirDniParaBuscarActor();
+            if(dni.equals("0")){
+                return null;
+            }
+            encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado);
+        Actor a = obtenerActor(dni);
+        return a;
+    }
+
+    private static Actor obtenerActor(String dni){
+        Actor actor=null;
+        for(Actor a : lista){
+            if(a.getDni().equals(dni)){
+                actor=a;
+                break;
+            }
+        }
+        return actor;
+    }
+    private static String introducirDniParaBuscarActor(){
+        String dni;
+        do {
+            for(Actor a : lista){
+                System.out.println("DNI: "+a.getDni()+" del actor: "+a.toString());
+            }
+            System.out.println("Introduce el DNI del Actor (0 para salir): ");
+            dni = sc.nextLine();
+        }while(!validar(dni) && !dni.equals("0"));
+        return dni;
+    }
+
+    private static boolean comprobarDNIEnLista(String dni){
+        boolean encontrado=false;
+        if(lista.isEmpty()){
+            return false;
+        }else {
+            for (Persona p : lista) {
+                if (p.getDni().equals(dni)) {
+                    encontrado = true;
+                    break;
+                }
+            }
+            return encontrado;
+        }
     }
 
     private static void mostrarActores(){

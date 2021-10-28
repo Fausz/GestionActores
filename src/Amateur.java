@@ -126,6 +126,6 @@ public class Amateur extends Actor{
 
     @Override
     public String toString() {
-        return "Actor tipo: Amateur, " + ", nombre: " + super.getNombre() + ", sueldo: " + sueldo ;
+        return "Actor tipo: Amateur, " + " nombre: " + super.getNombre() + ", sueldo: " + sueldo ;
     }
 }
