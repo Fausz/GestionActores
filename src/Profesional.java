@@ -95,6 +95,30 @@ public class Profesional extends Actor{
         super.setTelefono(telefono);
     }
 
+    public double getSueldoBase() {
+        return sueldoBase;
+    }
+
+    public void setSueldoBase(double sueldoBase) {
+        this.sueldoBase = sueldoBase;
+    }
+
+    public double getPrecioPorRepresentacion() {
+        return precioPorRepresentacion;
+    }
+
+    public void setPrecioPorRepresentacion(double precioPorRepresentacion) {
+        this.precioPorRepresentacion = precioPorRepresentacion;
+    }
+
+    public int getNumeroDeRepresentaciones() {
+        return numeroDeRepresentaciones;
+    }
+
+    public void setNumeroDeRepresentaciones(int numeroDeRepresentaciones) {
+        this.numeroDeRepresentaciones = numeroDeRepresentaciones;
+    }
+
     @Override
     public double calcularSueldo() {
         //Además los actores de más de 50 años

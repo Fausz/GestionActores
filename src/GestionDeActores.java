@@ -68,16 +68,21 @@ public class GestionDeActores {
             case 4:
                 boolean cambioHoras = cambiarHorasAmateur();
                 if(cambioHoras){
-                    System.out.println("Se han cambiado las horas que interpreta un Actor Amateur");
+                    System.out.println("Se han cambiado las horas que interpreta un Actor Amateur.");
                 }else{
-                    System.out.println("No se han cambiado las horas que interpreta un Actor Amateur");
+                    System.out.println("No se han cambiado las horas que interpreta un Actor Amateur.");
                 }
                 break;
             case 5:
-                System.out.println("Aumentar representaciones a un actor profesional");
+                boolean aumentarRepresentaciones = aumentarRepresentacionesAProfesional();
+                if(aumentarRepresentaciones){
+                    System.out.println("Se han cambiado el numero de representaciones de un Actor Profesional.");
+                }else{
+                    System.out.println("No se han cambiado el numero de representaciones de un Actor Profesional.");
+                }
                 break;
             case 6:
-                mostrarActores();
+                mostrarActoresPorNombreTipoYSueldo();
                 break;
             case 7:
                 System.out.println("Listado de actores menores de edad");
@@ -104,6 +109,37 @@ public class GestionDeActores {
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+    private static boolean aumentarRepresentacionesAProfesional(){
+        sc.nextLine();
+        boolean encontrado;
+        String dni;
+        do {
+            mostrarActoresProfesionales();
+            dni = introducirDni();
+            if(dni.equals("0")){
+                return false;
+            }
+            encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado);
+        Actor a = obtenerActor(dni);
+        if(a instanceof Profesional){
+            System.out.println("El numero de representaciones actuales es de: "+((Profesional) a).getNumeroDeRepresentaciones());
+        }
+        int representaciones = introducirNumeroDeRepresentaciones();
+        sc.nextLine();
+        if(a instanceof Profesional){
+            ((Profesional) a).setNumeroDeRepresentaciones(representaciones);
+        }
+
+        boolean confirmar = confirmarAccion();
+        if(confirmar) {
+            lista.remove(a);
+            lista.add(a);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     private static boolean cambiarHorasAmateur(){
@@ -146,6 +182,14 @@ public class GestionDeActores {
             }
         }
     }
+    private static void mostrarActoresProfesionales(){
+        for(Actor a : lista){
+            if(a instanceof Profesional){
+                System.out.println(a.toString());
+            }
+        }
+    }
+
     private static boolean cambioTipoAmateurAProfesional(){
         sc.nextLine();
         boolean encontrado;
@@ -243,7 +287,7 @@ public class GestionDeActores {
         }
     }
 
-    private static void mostrarActores(){
+    private static void mostrarActoresPorNombreTipoYSueldo(){
         if(lista.isEmpty()){
             System.out.println("No hay Actores en la lista.");
         }else {
