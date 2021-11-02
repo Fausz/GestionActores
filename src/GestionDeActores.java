@@ -38,7 +38,6 @@ public class GestionDeActores {
                 System.out.println("Fin del programa.");
                 return true;
             case 1:
-                //añadirActor();
                 a = añadirActor();
                 if(a==null){
                     System.out.println("No se ha añadido el Actor.");
@@ -113,7 +112,7 @@ public class GestionDeActores {
         String dni;
         do {
             mostrarActoresAmateur();
-            dni = introducirDniParaBuscarActor();
+            dni = introducirDni();
             if(dni.equals("0")){
                 return false;
             }
@@ -152,7 +151,7 @@ public class GestionDeActores {
         boolean encontrado;
         String dni;
         do {
-            dni = introducirDniParaBuscarActor();
+            dni = introducirDni();
             if(dni.equals("0")){
                 return false;
             }
@@ -195,7 +194,7 @@ public class GestionDeActores {
         String dni;
         do {
             mostrarTodosActores();
-            dni = introducirDniParaBuscarActor();
+            dni = introducirDni();
             if(dni.equals("0")){
                 return null;
             }
@@ -220,7 +219,7 @@ public class GestionDeActores {
         }
         return actor;
     }
-    private static String introducirDniParaBuscarActor(){
+    private static String introducirDni(){
         String dni;
         do {
             System.out.println("Introduce el DNI del Actor (0 para salir): ");
@@ -312,7 +311,17 @@ public class GestionDeActores {
 
         do {
             //Datos de Persona
-            dni = introducirDni();
+            boolean dniCorrecto = true;
+            do {
+                dni = introducirDni();
+                if(dni.equals("0")){
+                    return p=null;
+                }
+                if (comprobarDNIEnLista(dni)) {
+                    System.out.println("Este DNI ya está registrado.");
+                    dniCorrecto = false;
+                }
+            }while(!dniCorrecto);
             nombre = introducirNombre();
             fechaNacimiento = introducirFecha();
             domicilio = introducirDomicilio();
@@ -397,7 +406,18 @@ public class GestionDeActores {
 
         do {
             //Datos de Persona
-            dni = introducirDni();
+            boolean dniCorrecto = true;
+            do {
+                dni = introducirDni();
+                if(dni.equals("0")){
+                    return a=null;
+                }
+                if (comprobarDNIEnLista(dni)) {
+                    System.out.println("Este DNI ya está registrado.");
+                    dniCorrecto = false;
+                }
+            }while(!dniCorrecto);
+
             nombre = introducirNombre();
             fechaNacimiento = introducirFecha();
             domicilio = introducirDomicilio();
@@ -564,6 +584,7 @@ public class GestionDeActores {
     private static int introducirNumeroDireccion(){
         int numero;
         do{
+
             System.out.println("Introduce el numero de la direccion: ");
             numero = introducirNumeroEntero();
         }while (!comprobarNumeroEnteroPositivo(numero));
@@ -774,31 +795,6 @@ public class GestionDeActores {
            }
         }
         return true;
-    }
-
-    private static String introducirDni(){
-        String dni;
-        do {
-            System.out.println("Introduce el DNI del Actor: ");
-            dni = sc.nextLine();
-        }while(!validar(dni) || !comprobarDNIRepetido(dni));
-        return dni;
-    }
-
-    private static boolean comprobarDNIRepetido(String dni){
-        boolean encontrado=true;
-        if(lista.isEmpty()){
-            return true;
-        }else {
-            for (Persona p : lista) {
-                if (p.getDni().equals(dni)) {
-                    System.out.println("Este DNI ya está registrado.");
-                    encontrado = false;
-                    break;
-                }
-            }
-            return encontrado;
-        }
     }
 
     private static boolean validar(String dni){
