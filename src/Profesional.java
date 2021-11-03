@@ -141,7 +141,7 @@ public class Profesional extends Actor{
     public String toString() {
         return
                 super.toString()+
-                ", tipo = PROFESIONAL" +
+                ", tipo = PROFESIONAL, " +
                 "sueldoBase = " + sueldoBase +
                 ", precioPorRepresentacion = " + precioPorRepresentacion +
                 ", numeroDeRepresentaciones = " + numeroDeRepresentaciones;

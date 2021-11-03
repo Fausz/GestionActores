@@ -85,10 +85,10 @@ public class GestionDeActores {
                 mostrarActoresPorNombreTipoYSueldo();
                 break;
             case 7:
-                System.out.println("Listado de actores menores de edad");
+                mostrarActoresMenoresDeEdad();
                 break;
             case 8:
-                System.out.println("Listado de actores mayores de una edad");
+                mostrarActoresMayoresDeEdad();
                 break;
             case 9:
                 System.out.println("Listado de actores de una raza");
@@ -109,6 +109,23 @@ public class GestionDeActores {
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+    private static void mostrarActoresMayoresDeEdad(){
+        System.out.println("Listado de actores mayores de edad: \n----------------------------");
+        for(Actor a : lista) {
+            if (a.calcularEdad() >= 18) {
+                System.out.println(a.toString());
+            }
+        }
+    }
+
+    private static void mostrarActoresMenoresDeEdad(){
+        System.out.println("Listado de actores menores de edad:\n-----------------------");
+        for(Actor a : lista){
+            if(a.calcularEdad()<18){
+                System.out.println(a.toString());
+            }
+        }
     }
     private static boolean aumentarRepresentacionesAProfesional(){
         sc.nextLine();
@@ -1067,12 +1084,12 @@ public class GestionDeActores {
         }
     }
     private static Actor actorAmateurPorDefecto(){
-        Fecha f = new Fecha(23,04,1990);
+        Fecha f = new Fecha(23,04,2010);
         Direccion d = new Direccion("España",34,1,'f',"45434","Elche","Alicante","España");
         return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.CAUCASICO,60,21);
     }
     private static Profesional actorProfesionalPorDefecto(){
-        Fecha f = new Fecha(12,10,1942);
+        Fecha f = new Fecha(12,10,1992);
         Direccion d = new Direccion("Tercios",12,4,'c',"67876","Mieres","Asturias","España");
         return new Profesional("12345643J","Flavia",f,d,Genero.MUJER,"654354654",50,1.55,Raza.ORIENTAL,200,100,2);
     }
