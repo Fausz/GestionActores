@@ -100,7 +100,7 @@ public class GestionDeActores {
                 mostrarActoresSuperioresAUnPeso();
                 break;
             case 12:
-                System.out.println("Actor que más cobra");
+                mostrarActorQueMasCobra();
                 break;
             case 13:
                 System.out.println("Listado alfabético de actores");
@@ -111,9 +111,21 @@ public class GestionDeActores {
         return false;
     }
 
+    private static void mostrarActorQueMasCobra(){
+        double sueldo=0;
+        Actor actor=null;
+        for(Actor a : lista){
+            if(a.calcularSueldo()>sueldo){
+                sueldo = a.calcularSueldo();
+                actor = a;
+            }
+        }
+        System.out.println("\nEl Actor que más cobra es: "+actor.toString());
+    }
+
     private static void mostrarActoresSuperioresAUnPeso(){
         double peso = introducirPeso();
-        System.out.println("Actores superiores al peso seleccionado ("+peso+"): \n---------------------------------------");
+        System.out.println("\nActores superiores al peso seleccionado ("+peso+"): \n---------------------------------------");
         for(Actor a : lista){
             if(a.peso>=peso){
                 System.out.println(a.toString());
@@ -123,7 +135,7 @@ public class GestionDeActores {
 
     private static void mostrarActoresSuperioresAUnaAltura(){
         double altura = introducirAltura();
-        System.out.println("Actores superiores a la altura seleccionada ("+altura+"):\n---------------------------------------");
+        System.out.println("\nActores superiores a la altura seleccionada ("+altura+"):\n---------------------------------------");
         for(Actor a : lista){
             if(a.altura>=altura){
                 System.out.println(a.toString());
