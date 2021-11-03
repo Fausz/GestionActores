@@ -92,6 +92,7 @@ public class GestionDeActores {
                 break;
             case 9:
                 System.out.println("Listado de actores de una raza");
+                mostrarActoresPorRaza();
                 break;
             case 10:
                 System.out.println("Actores superiores a una altura");
@@ -110,6 +111,41 @@ public class GestionDeActores {
         }
         return false;
     }
+    private static void mostrarActoresPorRaza(){
+        Raza raza;
+            mostrarRazas();
+            raza=introducirRaza();
+            elegirTipoRaza(raza);
+    }
+
+    private static void elegirTipoRaza(Raza r){
+        switch (r){
+            case HISPANO:
+                mostrarActoresPorSuRaza(Raza.HISPANO);
+                break;
+            case ABORIGEN:
+                mostrarActoresPorSuRaza(Raza.ABORIGEN);
+                break;
+            case CAUCASICO:
+                mostrarActoresPorSuRaza(Raza.CAUCASICO);
+                break;
+            case NEGRO:
+                mostrarActoresPorSuRaza(Raza.NEGRO);
+                break;
+            case ORIENTAL:
+                mostrarActoresPorSuRaza(Raza.ORIENTAL);
+                break;
+        }
+    }
+
+    private static void mostrarActoresPorSuRaza(Raza r){
+        for(Actor a : lista){
+            if(a.raza.toString().equals(r.toString())){
+                System.out.println(a.toString());
+            }
+        }
+    }
+
     private static void mostrarActoresMayoresDeEdad(){
         System.out.println("Listado de actores mayores de edad: \n----------------------------");
         for(Actor a : lista) {
@@ -958,15 +994,18 @@ public class GestionDeActores {
         do {
             System.out.println("Introduce la raza del actor de las siguientes opciones:\n----------------------------- ");
             //System.out.println(Raza.CAUCASICO + " ," + Raza.HISPANO + " ," + Raza.NEGRO + " ," + Raza.ORIENTAL + " o " + Raza.ABORIGEN);
-            Object [] possibleValues = Raza.values();
-            for (Object o : possibleValues) {
-                System.out.println(o.toString());
-            }
+            mostrarRazas();
             raza = sc.nextLine().toUpperCase();
         }while(!comprobarRaza(raza));
         return Raza.valueOf(raza);
     }
 
+    private static void mostrarRazas(){
+        Object [] possibleValues = Raza.values();
+        for (Object o : possibleValues) {
+            System.out.println(o.toString());
+        }
+    }
     private static boolean comprobarRaza(String raza){
         boolean encontrado=false;
         //METER EN UN ARRAY LAS RAZAS Y COMPRARAR EL VALOR CON TODOS LOS VALORES DEL ARRAY
@@ -1086,7 +1125,7 @@ public class GestionDeActores {
     private static Actor actorAmateurPorDefecto(){
         Fecha f = new Fecha(23,04,2010);
         Direccion d = new Direccion("España",34,1,'f',"45434","Elche","Alicante","España");
-        return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.CAUCASICO,60,21);
+        return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.HISPANO,60,21);
     }
     private static Profesional actorProfesionalPorDefecto(){
         Fecha f = new Fecha(12,10,1992);
