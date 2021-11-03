@@ -91,11 +91,10 @@ public class GestionDeActores {
                 mostrarActoresMayoresDeEdad();
                 break;
             case 9:
-                System.out.println("Listado de actores de una raza");
                 mostrarActoresPorRaza();
                 break;
             case 10:
-                System.out.println("Actores superiores a una altura");
+                mostrarActoresSuperioresAUnaAltura();
                 break;
             case 11:
                 System.out.println("Actores superiores a un peso");
@@ -111,6 +110,18 @@ public class GestionDeActores {
         }
         return false;
     }
+
+    private static void mostrarActoresSuperioresAUnaAltura(){
+        double altura = introducirAltura();
+        System.out.println("Actores superiores a la altura seleccionada ("+altura+"):\n---------------------------------------");
+        for(Actor a : lista){
+            if(a.altura>=altura){
+                System.out.println(a.toString());
+            }
+        }
+    }
+
+
     private static void mostrarActoresPorRaza(){
         Raza raza;
             mostrarRazas();
