@@ -1,10 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 import java.text.ParseException;
 
 import java.text.SimpleDateFormat;
@@ -103,12 +100,29 @@ public class GestionDeActores {
                 mostrarActorQueMasCobra();
                 break;
             case 13:
-                System.out.println("Listado alfabético de actores");
+                mostrarActoresPorOrdenAlfabetico();
                 break;
             default:
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+
+    private static void mostrarActoresPorOrdenAlfabetico(){
+        System.out.println("\n-----Listado alfabético de actores-----");
+        Collections.sort(lista, new Comparator<Actor>(){
+
+            @Override
+            public int compare(Actor a1, Actor a2) {
+                return a1.getNombre().compareTo(a2.getNombre());
+            }
+
+
+        });
+
+        for(Actor a : lista){
+            System.out.println(a.getNombre());
+        }
     }
 
     private static void mostrarActorQueMasCobra(){
