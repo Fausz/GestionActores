@@ -97,7 +97,7 @@ public class GestionDeActores {
                 mostrarActoresSuperioresAUnaAltura();
                 break;
             case 11:
-                System.out.println("Actores superiores a un peso");
+                mostrarActoresSuperioresAUnPeso();
                 break;
             case 12:
                 System.out.println("Actor que más cobra");
@@ -109,6 +109,16 @@ public class GestionDeActores {
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
+    }
+
+    private static void mostrarActoresSuperioresAUnPeso(){
+        double peso = introducirPeso();
+        System.out.println("Actores superiores al peso seleccionado ("+peso+"): \n---------------------------------------");
+        for(Actor a : lista){
+            if(a.peso>=peso){
+                System.out.println(a.toString());
+            }
+        }
     }
 
     private static void mostrarActoresSuperioresAUnaAltura(){
