@@ -4,15 +4,12 @@ public class Profesional extends Actor{
     private double precioPorRepresentacion;
     private int numeroDeRepresentaciones;
 
-
     public Profesional(double peso, double altura, Raza raza, double sueldoBase, double precioPorRepresentacion, int numeroDeRepresentaciones) {
         super(peso, altura, raza);
         this.sueldoBase = sueldoBase;
         this.precioPorRepresentacion = precioPorRepresentacion;
         this.numeroDeRepresentaciones = numeroDeRepresentaciones;
     }
-
-
 
     public Profesional(String dni, String nombre, Fecha fechaNacimiento, Direccion domicilio, Genero sexo, String telefono, double peso, double altura, Raza raza, double sueldoBase, double precioPorRepresentacion, int numeroDeRepresentaciones) {
         super(dni, nombre, fechaNacimiento, domicilio, sexo, telefono, peso, altura, raza);
@@ -131,7 +128,6 @@ public class Profesional extends Actor{
 
         return sueldo;
     }
-
 
     public String toStringListadoYSueldo() {
         return "Actor tipo: Profesional, nombre: " + super.getNombre()+", sueldo: " + calcularSueldo();

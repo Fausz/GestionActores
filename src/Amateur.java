@@ -124,7 +124,6 @@ public class Amateur extends Actor{
         this.sueldo = sueldo;
     }
 
-
     public String toStringListadoYSueldo() {
         return "Actor tipo: Amateur, nombre: " + super.getNombre() + ", sueldo: " + sueldo ;
     }

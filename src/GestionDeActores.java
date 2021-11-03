@@ -116,8 +116,6 @@ public class GestionDeActores {
             public int compare(Actor a1, Actor a2) {
                 return a1.getNombre().compareTo(a2.getNombre());
             }
-
-
         });
 
         for(Actor a : lista){
@@ -210,6 +208,7 @@ public class GestionDeActores {
             }
         }
     }
+
     private static boolean aumentarRepresentacionesAProfesional(){
         sc.nextLine();
         boolean encontrado;
@@ -258,7 +257,6 @@ public class GestionDeActores {
         if(a instanceof Amateur){
             System.out.println("El numero de horas actuales es de: "+((Amateur) a).getNumeroHoras());
         }
-
         int horas = introducirNumeroHoras();
         sc.nextLine();
         if(a instanceof Amateur){
@@ -272,7 +270,6 @@ public class GestionDeActores {
         }else{
             return false;
         }
-
     }
 
     private static void mostrarActoresAmateur(){
@@ -301,7 +298,6 @@ public class GestionDeActores {
             }
             encontrado = comprobarDNIEnLista(dni);
         }while(!encontrado);
-
         Actor a = obtenerActor(dni);
         Actor cambio = cambiarTipo(a);
         System.out.println("Datos antiguos:\n"+a.toString()+"\n");
@@ -316,7 +312,6 @@ public class GestionDeActores {
     }
 
     private static Actor cambiarTipo(Actor a){
-
         String dni = a.getDni();
         String nombre = a.getNombre();
         Fecha f = a.getFechaNacimiento();
@@ -331,8 +326,8 @@ public class GestionDeActores {
         int numeroRepresentaciones = introducirNumeroDeRepresentaciones();
         sc.nextLine();
         return new Profesional(dni,nombre,f,d,g,telefono,peso,altura,r,sueldoBase,precioPorRepresentacion,numeroRepresentaciones);
-
     }
+
     private static Actor eliminarActor(){
         boolean encontrado;
         String dni;
@@ -363,6 +358,7 @@ public class GestionDeActores {
         }
         return actor;
     }
+
     private static String introducirDni(){
         String dni;
         do {
@@ -406,16 +402,13 @@ public class GestionDeActores {
         int tipo;
         Actor a;
         do {
-
             mostrarMenuTipoActor();
             tipo=introducirNumeroEntero();
-
-
         }while(!comprobarTipoActor(tipo));
         a = seleccionarOpcionCrearActor(tipo);
-
         return a;
     }
+
     private static Actor seleccionarOpcionCrearActor(int tipo) {
         Actor a=null;
         switch (tipo){
@@ -452,7 +445,6 @@ public class GestionDeActores {
         double sueldoBase=0;
         double precioPorRepresentacion=0;
         int numeroDeRepresentaciones=0;
-
         do {
             //Datos de Persona
             boolean dniCorrecto = true;
@@ -471,24 +463,19 @@ public class GestionDeActores {
             domicilio = introducirDomicilio();
             sexo = introducirGenero();
             telefono = introducirTelefono();
-
             if (continuarCreacion = continuarCreacion()) {
-
                 //Datos de Actor
                 peso = introducirPeso();
                 altura = introducirAltura();
                 raza = introducirRaza();
-
                 //Datos de Amateur
                 sueldoBase = introducirSueldoBase();
                 precioPorRepresentacion = introducirPrecioPorRepresentacion();
                 numeroDeRepresentaciones = introducirNumeroDeRepresentaciones();
                 sc.nextLine();
             }
-
             cancelarCreacion = confirmarAccion();
         }while(!continuarCreacion && !cancelarCreacion);
-
         if(cancelarCreacion){
             p=null;
             return p;
@@ -547,7 +534,6 @@ public class GestionDeActores {
         Raza raza=Raza.HISPANO;
         double importeHora=50;
         int numeroHoras=10;
-
         do {
             //Datos de Persona
             boolean dniCorrecto = true;
@@ -561,29 +547,23 @@ public class GestionDeActores {
                     dniCorrecto = false;
                 }
             }while(!dniCorrecto);
-
             nombre = introducirNombre();
             fechaNacimiento = introducirFecha();
             domicilio = introducirDomicilio();
             sexo = introducirGenero();
             telefono = introducirTelefono();
-
             if (continuarCreacion = continuarCreacion()) {
-
                 //Datos de Actor
                 peso = introducirPeso();
                 altura = introducirAltura();
                 raza = introducirRaza();
-
                 //Datos de Amateur
                 importeHora = introducirImporteHora();
                 numeroHoras = introducirNumeroHoras();
                 sc.nextLine();
             }
-
             cancelarCreacion = confirmarAccion();
         }while(!continuarCreacion && !cancelarCreacion);
-
         if(cancelarCreacion){
             a=null;
             return a;
@@ -619,7 +599,6 @@ public class GestionDeActores {
     }
 
     private static Direccion introducirDomicilio(){
-
         String nombreCalle = introducirNombreCalle();
         int numero = introducirNumeroDireccion();
         int piso = introducirPiso();
@@ -650,7 +629,6 @@ public class GestionDeActores {
     }
 
     private static String introducirPoblacion(){
-
         String poblacion;
         do{
             System.out.println("Introduce la poblacion: ");
@@ -674,11 +652,11 @@ public class GestionDeActores {
             char c = codigoPostal.charAt(i);
             if (c=='0' || c=='1' ||c=='2' ||c=='3' ||c=='4' ||c=='5' ||c=='6' ||c=='7' ||c=='8' ||c=='9') {
                 correcto = true;
-
             }
         }
         return correcto;
     }
+
     private static boolean comprobarTamañoCodigoPostal(String codigoPostal){
         if(codigoPostal.length()!=5){
             System.out.println("No has introducido 5 digitos para el codigo postal.");
@@ -743,29 +721,28 @@ public class GestionDeActores {
         }while(!comprobarTexto(nombreCalle));
         return nombreCalle;
     }
-    private static Fecha introducirFecha(){
 
+    private static Fecha introducirFecha(){
         int dia = introducirDia();
         int mes = introducirMes();
         int año = introducirAño();
         String fecha = dia+"/"+mes+"/"+año;
         boolean res=true;
         res=validarFecha(fecha);
-
         if(res==true && comprobarFechaPresente(dia,mes,año)){
-
+            //si esta bien esta bien, sino mostramos mensaje de error
         }else {
             System.out.println("La fecha no es valida");
         }
         return new Fecha(dia,mes,año);
     }
+
     private static boolean comprobarFechaPresente(int dia, int mes, int año){
         boolean valido=true;
         LocalDate current_date = LocalDate.now();
         int dA = current_date.getDayOfMonth();
         int mA = current_date.getMonthValue();
         int yA = current_date.getYear();
-
         if(año==yA){
             if(mes==mA){
                 if(dia>dA){
@@ -777,8 +754,8 @@ public class GestionDeActores {
         }
         return valido;
     }
-    private static boolean validarFecha(String fecha) {
 
+    private static boolean validarFecha(String fecha) {
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             formatoFecha.setLenient(false);
@@ -801,7 +778,6 @@ public class GestionDeActores {
     private static boolean comprobarRangoAño(int n){
         LocalDate current_date = LocalDate.now();
         int current_Year = current_date.getYear();
-
         if(n<=current_Year-120 || n>current_Year){
             if(n<=current_Year-120){
                 System.out.println("El año introducido implica tener mas de 120 años...");
@@ -873,6 +849,7 @@ public class GestionDeActores {
             return true;
         }
     }
+
     private static boolean comprobarNumeros(String cadena){
         char c;
         for(int i = 0; i<cadena.length();i++){
@@ -900,9 +877,8 @@ public class GestionDeActores {
         for (Object o : possibleValues) {
             System.out.println(o.toString());
         }
-
-
     }
+
     private static boolean comprobarGenero(String genero){
         boolean encontrado=false;
         //METER EN UN ARRAY LAS RAZAS Y COMPRARAR EL VALOR CON TODOS LOS VALORES DEL ARRAY
@@ -942,16 +918,13 @@ public class GestionDeActores {
     }
 
     private static boolean validar(String dni){
-
         String letraMayuscula="";
         //Si no tiene 9 caracteres o el caracter numero 9 no es una letra devolvemos que está mal
         if(dni.length() !=9 || Character.isLetter(dni.charAt(8))==false){
             return false;
         }
-
         //obtenemos la letra del ultimo caracter en mayuscula
         letraMayuscula = dni.substring(8).toUpperCase();
-
         //si los 8 primeros digitos son numeros y la letra del dni es correcta entonces está validado
         if(soloNumeros(dni) == true /*&& letraDni(dni).equals(letraMayuscula)*/){
             return true;
@@ -977,10 +950,8 @@ public class GestionDeActores {
         String numero = "";
         String miDNI = "";
         String [] unoNueve = {"0","1","2","3","4","5","6","7","8","9"};
-
         for(i=0;i<dni.length()-1;i++){
             numero = dni.substring(i,i+1);
-
             for(j=0;j<unoNueve.length;j++) {
                 if (numero.equals(unoNueve[j])) {
                     miDNI += unoNueve[j];
@@ -1004,14 +975,12 @@ public class GestionDeActores {
     }
 
     private static boolean confirmarAccion(){
-
         String respuesta;
         do {
             System.out.println("¿Desea confirmar la accion? (Y o N)");
             respuesta = sc.nextLine().toUpperCase();
         }while(!validarRespuesta(respuesta));
         return comprobarRespuesta(respuesta);
-
     }
 
     private static boolean comprobarRespuesta(String respuesta){
@@ -1023,7 +992,6 @@ public class GestionDeActores {
     }
 
     private static boolean validarRespuesta(String respuesta){
-
         if(respuesta.length()>1){
             return false;
         }else{
@@ -1162,18 +1130,20 @@ public class GestionDeActores {
         System.out.println("11 - Actores superiores a un peso.");
         System.out.println("12 - Actor que más cobra");
         System.out.println("13 - Listado alfabético de actores.\n----------------------------------------");
-
     }
+
     private static void mostrarTodosActores(){
         for(Actor a : lista){
             System.out.println(a.toString());
         }
     }
+
     private static Actor actorAmateurPorDefecto(){
         Fecha f = new Fecha(23,04,2010);
         Direccion d = new Direccion("España",34,1,'f',"45434","Elche","Alicante","España");
         return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.HISPANO,60,21);
     }
+
     private static Profesional actorProfesionalPorDefecto(){
         Fecha f = new Fecha(12,10,1992);
         Direccion d = new Direccion("Tercios",12,4,'c',"67876","Mieres","Asturias","España");
