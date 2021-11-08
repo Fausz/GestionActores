@@ -8,12 +8,13 @@ import java.text.SimpleDateFormat;
 
 public class GestionDeActores {
     static Scanner sc = new Scanner(System.in);
-    static ArrayList<Actor> lista = new ArrayList<>();
+    static ArrayList<Contratable> lista = new ArrayList<>();
 
     public static void main(String[] args) {
 
         lista.add(actorAmateurPorDefecto());
         lista.add(actorProfesionalPorDefecto());
+        lista.add(perroPorDefecto());
 
         boolean salir=false;
         do{
@@ -35,48 +36,19 @@ public class GestionDeActores {
                 System.out.println("Fin del programa.");
                 return true;
             case 1:
-                a = añadirActor();
-                if(a==null){
-                    System.out.println("No se ha añadido el Actor.");
-                }else {
-                    System.out.println(a.toString());
-                    lista.add(a);
-                    System.out.println("Se ha añadido el actor a la lista.");
-                }
+                añadirActor();
                 break;
             case 2:
-                sc.nextLine();
-                a = eliminarActor();
-                if(a==null){
-                    System.out.println("No se ha eliminado el actor");
-                }else{
-                    lista.remove(a);
-                    System.out.println("Se ha eliminado el actor de la lista.");
-                }
+                eliminarActor();
                 break;
             case 3:
-                boolean cambioTipo = cambioTipoAmateurAProfesional();
-                if(cambioTipo){
-                    System.out.println("Se ha realizado el cambio correctamente.");
-                }else{
-                    System.out.println("No se ha realizado ningun cambio.");
-                }
+                cambioTipoAmateurAProfesional();
                 break;
             case 4:
-                boolean cambioHoras = cambiarHorasAmateur();
-                if(cambioHoras){
-                    System.out.println("Se han cambiado las horas que interpreta un Actor Amateur.");
-                }else{
-                    System.out.println("No se han cambiado las horas que interpreta un Actor Amateur.");
-                }
+                cambiarHorasAmateur();
                 break;
             case 5:
-                boolean aumentarRepresentaciones = aumentarRepresentacionesAProfesional();
-                if(aumentarRepresentaciones){
-                    System.out.println("Se han cambiado el numero de representaciones de un Actor Profesional.");
-                }else{
-                    System.out.println("No se han cambiado el numero de representaciones de un Actor Profesional.");
-                }
+                aumentarRepresentacionesAProfesional();
                 break;
             case 6:
                 mostrarActoresPorNombreTipoYSueldo();
@@ -102,45 +74,137 @@ public class GestionDeActores {
             case 13:
                 mostrarActoresPorOrdenAlfabetico();
                 break;
+            case 14:
+                listadoAlfabeticoDePerros();
+                break;
             default:
                 System.err.println("Has introducido un valor no valido.");
         }
         return false;
     }
 
-    private static void mostrarActoresPorOrdenAlfabetico(){
-        System.out.println("\n-----Listado alfabético de actores-----");
-        Collections.sort(lista, new Comparator<Actor>(){
+    public static void listadoAlfabeticoDePerros() {
+        System.out.println("\n------Opcion de mostrar Perros por orden alfabetico----------");
+        Contratable aux;
 
-            @Override
-            public int compare(Actor a1, Actor a2) {
-                return a1.getNombre().compareTo(a2.getNombre());
+        System.out.println();
+        if (lista.isEmpty()) {
+            System.out.println("No hay Actores");
+        } else {
+
+            ArrayList<Contratable> Lista = new ArrayList<Contratable>();//se crea un ArrayList nuevo para ordenar solo los Actores
+
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i) instanceof Perro) {//solo se introducen perros
+                    Lista.add(lista.get(i));
+                }
             }
-        });
+            if (Lista.isEmpty()) {
+                System.out.println("Solo hay Personas en la Lista de Actores");
 
-        for(Actor a : lista){
-            System.out.println(a.getNombre());
+            } else {
+
+                //se ordena el ArrayList Lista
+                for (int i = 0; i < Lista.size() - 1; i++) {
+                    for (int j = 0; j < Lista.size() - i - 1; j++) {
+                        if ((((Perro) (Lista.get(j + 1))).getNombrePerro()).compareToIgnoreCase(((Perro) (Lista.get(j))).getNombrePerro()) < 0) {
+                            aux = Lista.get(j + 1);
+                            Lista.set(j + 1, Lista.get(j));
+                            Lista.set(j, aux);
+                        }
+                    }
+                }
+                //se muestra el ArrayList Lista
+                for (int i = 0; i < Lista.size(); i++) {
+                    System.out.println(((Perro) Lista.get(i)).getNombrePerro() + " Sueldo: " + Lista.get(i).calcularSueldo());
+                }
+                System.out.println("--------------------\n");
+            }
         }
     }
+    private static void mostrarActoresPorOrdenAlfabetico(){
+        System.out.println("\n------Opcion de mostrar Actores por orden alfabetico----------");
+        ArrayList<Contratable> ActoresOrdenados = new ArrayList<Contratable>();//se crea un ArrayList nuevo para ordenar solo los Actores
 
+        Contratable aux;
+
+        System.out.println();
+        //si no hay actores se muestra que no hay
+        if (lista.isEmpty()) {
+            System.out.println("No hay Actores");
+
+        } else {
+            //si hay actores que no sean de tipo perro se guardan en el nuevo array
+            for (int i = 0; i < lista.size(); i++) {
+                if (!(lista.get(i) instanceof Perro)) {//se buscan Actores en el ArrayList
+                    ActoresOrdenados.add(lista.get(i));//se guardan los Actores en el ArrayList
+                }
+            }
+            //si solo hay perros guardados en el nuevo array se dice que solo hay perros y no personas
+            if (ActoresOrdenados.isEmpty()) {
+                System.out.println("Solo hay perros en la lista de Actores");
+
+            } else {
+                //si hay actores se procede a ordenar el array
+                //se ordena el ArrayList Lista
+                for (int i = 0; i < ActoresOrdenados.size() - 1; i++) {
+                    for (int j = 0; j < ActoresOrdenados.size() - i - 1; j++) {
+                        if ((((Actor) (ActoresOrdenados.get(j + 1))).getNombre()).compareToIgnoreCase(((Actor) (ActoresOrdenados.get(j))).getNombre()) < 0) {
+                            aux = (Contratable) ActoresOrdenados.get(j + 1);
+                            ActoresOrdenados.set(j + 1, ActoresOrdenados.get(j));
+                            ActoresOrdenados.set(j, aux);
+                        }
+                    }
+                }
+                //se muestra el ArrayList
+                for (int i = 0; i < ActoresOrdenados.size(); i++) {
+                    System.out.println(((Actor) ActoresOrdenados.get(i)).getNombre() + " Sueldo: " + ActoresOrdenados.get(i).calcularSueldo());
+                }
+                System.out.println("--------------------\n");
+
+            }
+        }
+    }
     private static void mostrarActorQueMasCobra(){
         double sueldo=0;
         Actor actor=null;
-        for(Actor a : lista){
-            if(a.calcularSueldo()>sueldo){
-                sueldo = a.calcularSueldo();
-                actor = a;
+        Perro p=null;
+        boolean persona=true;
+        if(lista.isEmpty()){
+            System.out.println("No hay actores en la lista.");
+        }else {
+            for (Contratable a : lista) {
+                if (a.calcularSueldo() > sueldo) {
+                    sueldo = a.calcularSueldo();
+                    if (a instanceof Amateur || a instanceof Profesional) {
+                        actor = (Actor) a;
+                        persona = true;
+                    } else {
+                        p = (Perro) a;
+                        persona = false;
+                    }
+                }
+            }
+            if (persona) {
+                System.out.println("\nEl Actor que más cobra es: " + actor.toString());
+            } else {
+                System.out.println("\nEl Actor que más cobra es el: " + p.toString());
             }
         }
-        System.out.println("\nEl Actor que más cobra es: "+actor.toString());
     }
 
     private static void mostrarActoresSuperioresAUnPeso(){
         double peso = introducirPeso();
         System.out.println("\nActores superiores al peso seleccionado ("+peso+"): \n---------------------------------------");
-        for(Actor a : lista){
-            if(a.peso>=peso){
-                System.out.println(a.toString());
+        if(lista.isEmpty()){
+            System.out.println("No hay actores en la lista.");
+        }else {
+            for (Contratable a : lista) {
+                if (a instanceof Amateur || a instanceof Profesional) {
+                    if (((Actor) a).getPeso() >= peso) {
+                        System.out.println(a.toString());
+                    }
+                }
             }
         }
     }
@@ -148,22 +212,33 @@ public class GestionDeActores {
     private static void mostrarActoresSuperioresAUnaAltura(){
         double altura = introducirAltura();
         System.out.println("\nActores superiores a la altura seleccionada ("+altura+"):\n---------------------------------------");
-        for(Actor a : lista){
-            if(a.altura>=altura){
-                System.out.println(a.toString());
+        if(lista.isEmpty()){
+            System.out.println("No hay actores en la lista.");
+        }else {
+            for(Contratable a : lista) {
+                if (a instanceof Amateur || a instanceof Profesional) {
+                    if (((Actor) a).getAltura() >= altura) {
+                        System.out.println(a.toString());
+                    }
+                }
             }
         }
     }
 
 
     private static void mostrarActoresPorRaza(){
-        Raza raza;
-            mostrarRazas();
-            raza=introducirRaza();
+        System.out.println("\n------Opcion de mostrar Actores por Raza----------");
+        if(lista.isEmpty()){
+            System.out.println("No hay actores en la lista.");
+        }else {
+            Raza raza;
+            raza = introducirRaza();
             elegirTipoRaza(raza);
+        }
     }
 
     private static void elegirTipoRaza(Raza r){
+        System.out.println("\n----Listado de raza de tipo: "+r.toString()+"--------");
         switch (r){
             case HISPANO:
                 mostrarActoresPorSuRaza(Raza.HISPANO);
@@ -184,143 +259,197 @@ public class GestionDeActores {
     }
 
     private static void mostrarActoresPorSuRaza(Raza r){
-        for(Actor a : lista){
-            if(a.raza.toString().equals(r.toString())){
-                System.out.println(a.toString());
+        if(lista.isEmpty()){
+            System.out.println("No hay ningun Actor en la lista.");
+        }else {
+            ArrayList<Contratable> nuevaLista = new ArrayList<>();
+            for (Contratable a : lista) {
+                if (a instanceof Amateur || a instanceof Profesional) {
+                    if (((Actor) a).getRaza().toString().equals(r.toString())) {
+                        nuevaLista.add(a);
+                    }
+                }
+            }
+            if (nuevaLista.isEmpty()) {
+                System.out.println("No hay ningun actor de la raza "+r.toString());
+
+            }else{
+                for (Contratable c : nuevaLista) {
+                    if (c instanceof Amateur || c instanceof Profesional) {
+                        if (((Actor) c).getRaza().toString().equals(r.toString())) {
+                            System.out.println(c.toString());
+                        }
+                    }
+                }
             }
         }
     }
 
     private static void mostrarActoresMayoresDeEdad(){
-        System.out.println("Listado de actores mayores de edad: \n----------------------------");
-        for(Actor a : lista) {
-            if (a.calcularEdad() >= 18) {
-                System.out.println(a.toString());
+        System.out.println("\n------Opcion de mostrar Actores mayores de edad----------");
+        if(lista.isEmpty()){
+            System.out.println("No hay actores en la lista.");
+        }else {
+            for(Contratable a : lista) {
+                if (a instanceof Amateur || a instanceof Profesional) {
+                    if (((Actor) a).calcularEdad() >= 18) {
+                        System.out.println(a.toString());
+                    }
+                }
             }
         }
     }
 
     private static void mostrarActoresMenoresDeEdad(){
-        System.out.println("Listado de actores menores de edad:\n-----------------------");
-        for(Actor a : lista){
-            if(a.calcularEdad()<18){
-                System.out.println(a.toString());
+            System.out.println("\n------Opcion de mostrar Actores menores de edad----------");
+            if(lista.isEmpty()){
+                System.out.println("No hay actores en la lista.");
+            }else {
+            for (Contratable a : lista) {
+                if (a instanceof Amateur || a instanceof Profesional) {
+                    if (((Actor) a).calcularEdad() < 18) {
+                        System.out.println(a.toString());
+                    }
+                }
             }
         }
     }
 
-    private static boolean aumentarRepresentacionesAProfesional(){
+    private static void aumentarRepresentacionesAProfesional(){
         sc.nextLine();
         boolean encontrado;
+        boolean salir = false;
         String dni;
+        System.out.println("\n------Opcion de aumentar representaciones de un Actor de tipo Profesional----------");
         do {
             mostrarActoresProfesionales();
             dni = introducirDni();
             if(dni.equals("0")){
-                return false;
+                salir = true;
             }
-            encontrado = comprobarDNIEnLista(dni);
-        }while(!encontrado);
-        Actor a = obtenerActor(dni);
-        if(a instanceof Profesional){
-            System.out.println("El numero de representaciones actuales es de: "+((Profesional) a).getNumeroDeRepresentaciones());
-        }
-        int representaciones = introducirNumeroDeRepresentaciones();
-        sc.nextLine();
-        if(a instanceof Profesional){
-            ((Profesional) a).setNumeroDeRepresentaciones(representaciones);
-        }
+                encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado && !salir);
+        if(!salir) {
+            Actor a = obtenerActor(dni);
+            if (a instanceof Profesional) {
+                System.out.println("El numero de representaciones actuales es de: " + ((Profesional) a).getNumeroDeRepresentaciones());
+            }
+            int representaciones = introducirNumeroDeRepresentaciones();
+            sc.nextLine();
+            if (a instanceof Profesional) {
+                ((Profesional) a).setNumeroDeRepresentaciones(representaciones);
+            }
 
-        boolean confirmar = confirmarAccion();
-        if(confirmar) {
-            lista.remove(a);
-            lista.add(a);
-            return true;
+            boolean confirmar = confirmarAccion();
+            if (confirmar) {
+                lista.remove(a);
+                lista.add((Contratable) a);
+                System.out.println("Se han cambiado el numero de representaciones de un Actor Profesional.");
+            } else {
+                System.out.println("No se han cambiado el numero de representaciones de un Actor Profesional.");
+            }
         }else{
-            return false;
+            System.out.println("No se han cambiado el numero de representaciones de un Actor Profesional.");
         }
     }
 
-    private static boolean cambiarHorasAmateur(){
+    private static void cambiarHorasAmateur(){
         sc.nextLine();
         boolean encontrado;
+        boolean salir = false;
         String dni;
+        System.out.println("\n------Opcion de cambio de horas de un Actor de tipo Amateur ----------");
         do {
             mostrarActoresAmateur();
             dni = introducirDni();
             if(dni.equals("0")){
-                return false;
+                salir = true;
             }
-            encontrado = comprobarDNIEnLista(dni);
-        }while(!encontrado);
-        Actor a = obtenerActor(dni);
-        if(a instanceof Amateur){
-            System.out.println("El numero de horas actuales es de: "+((Amateur) a).getNumeroHoras());
-        }
-        int horas = introducirNumeroHoras();
-        sc.nextLine();
-        if(a instanceof Amateur){
-            ((Amateur) a).setNumeroHoras(horas);
-        }
-        boolean confirmar = confirmarAccion();
-        if(confirmar) {
-            lista.remove(a);
-            lista.add(a);
-            return true;
+                encontrado = comprobarDNIEnLista(dni);
+
+        }while(!encontrado && !salir);
+        if(!salir) {
+            Actor a = obtenerActor(dni);
+            if (a instanceof Amateur) {
+                System.out.println("El numero de horas actuales es de: " + ((Amateur) a).getNumeroHoras());
+            }
+            int horas = introducirNumeroHoras();
+            sc.nextLine();
+            if (a instanceof Amateur) {
+                ((Amateur) a).setNumeroHoras(horas);
+            }
+            boolean confirmar = confirmarAccion();
+            if (confirmar) {
+                lista.remove(a);
+                lista.add((Contratable) a);
+                System.out.println("Se han cambiado las horas que interpreta un Actor Amateur.");
+            } else {
+                System.out.println("No se han cambiado las horas que interpreta un Actor Amateur.");
+            }
         }else{
-            return false;
+            System.out.println("No se han cambiado las horas que interpreta un Actor Amateur.");
         }
     }
 
     private static void mostrarActoresAmateur(){
-        for(Actor a : lista){
+        for(Contratable a : lista){
             if(a instanceof Amateur){
                 System.out.println(a.toString());
             }
         }
     }
     private static void mostrarActoresProfesionales(){
-        for(Actor a : lista){
+        for(Contratable a : lista){
             if(a instanceof Profesional){
                 System.out.println(a.toString());
             }
         }
     }
 
-    private static boolean cambioTipoAmateurAProfesional(){
+    private static void cambioTipoAmateurAProfesional(){
         sc.nextLine();
         boolean encontrado;
+        boolean salir=false;
         String dni;
+        System.out.println("\n------Opcion de cambio de Actor de tipo Amateur a Profesional----------");
         do {
+            mostrarActoresAmateur();
             dni = introducirDni();
             if(dni.equals("0")){
-                return false;
+                salir = true;
             }
-            encontrado = comprobarDNIEnLista(dni);
-        }while(!encontrado);
-        Actor a = obtenerActor(dni);
-        Actor cambio = cambiarTipo(a);
-        System.out.println("Datos antiguos:\n"+a.toString()+"\n");
-        System.out.println("Datos nuevos: \n"+cambio.toString()+"\n");
-        boolean confirmacion = confirmarAccion();
-        if(confirmacion){
-            lista.remove(a);
-            lista.add(cambio);
-            return true;
+                encontrado = comprobarDNIEnLista(dni);
+
+        }while(!encontrado && !salir);
+        if(!salir) {
+            Actor a = obtenerActor(dni);
+            Actor cambio = cambiarTipo(a);
+            System.out.println("Datos antiguos:\n" + a.toString() + "\n");
+            System.out.println("Datos nuevos: \n" + cambio.toString() + "\n");
+            boolean confirmacion = confirmarAccion();
+            if (confirmacion) {
+                lista.remove(a);
+                lista.add((Contratable) cambio);
+                System.out.println("Se ha realizado el cambio correctamente.");
+            } else {
+                System.out.println("No se ha realizado ningun cambio.");
+            }
+        }else{
+            System.out.println("No se ha realizado ningun cambio.");
         }
-        return false;
     }
 
-    private static Actor cambiarTipo(Actor a){
+    private static Profesional cambiarTipo(Actor a){
+        mostrarActoresAmateur();
         String dni = a.getDni();
         String nombre = a.getNombre();
         Fecha f = a.getFechaNacimiento();
         Direccion d = a.getDomicilio();
         Genero g = a.getSexo();
         String telefono = a.getTelefono();
-        double peso = a.peso;
-        double altura = a.altura;
-        Raza r = a.raza;
+        double peso = a.getPeso();
+        double altura = a.getAltura();
+        Raza r = a.getRaza();
         double sueldoBase = introducirSueldoBase();
         double precioPorRepresentacion = introducirPrecioPorRepresentacion();
         int numeroRepresentaciones = introducirNumeroDeRepresentaciones();
@@ -328,32 +457,41 @@ public class GestionDeActores {
         return new Profesional(dni,nombre,f,d,g,telefono,peso,altura,r,sueldoBase,precioPorRepresentacion,numeroRepresentaciones);
     }
 
-    private static Actor eliminarActor(){
+    private static void eliminarActor(){
+        sc.nextLine();
         boolean encontrado;
+        boolean salir=false;
         String dni;
         do {
             mostrarTodosActores();
             dni = introducirDni();
             if(dni.equals("0")){
-                return null;
+                salir = true;
             }
-            encontrado = comprobarDNIEnLista(dni);
-        }while(!encontrado);
-
-        Actor a = obtenerActor(dni);
-        boolean confirmacion = confirmarAccion();
-        if(confirmacion){
-            return a;
+                encontrado = comprobarDNIEnLista(dni);
+        }while(!encontrado && !salir);
+        if(!salir) {
+            Actor a = obtenerActor(dni);
+            boolean confirmacion = confirmarAccion();
+            if (confirmacion && a != null) {
+                lista.remove(a);
+                System.out.println("Se ha eliminado el actor de la lista.");
+            } else {
+                System.out.println("No se ha eliminado el actor");
+            }
+        }else{
+            System.out.println("No se ha eliminado el actor");
         }
-        return null;
     }
 
     private static Actor obtenerActor(String dni){
         Actor actor=null;
-        for(Actor a : lista){
-            if(a.getDni().equals(dni)){
-                actor=a;
-                break;
+        for(Contratable a : lista) {
+            if (a instanceof Amateur || a instanceof Profesional) {
+                if (((Actor) a).getDni().equals(dni)) {
+                    actor = (Actor) a;
+                    break;
+                }
             }
         }
         return actor;
@@ -373,10 +511,12 @@ public class GestionDeActores {
         if(lista.isEmpty()){
             return false;
         }else {
-            for (Persona p : lista) {
-                if (p.getDni().equals(dni)) {
-                    encontrado = true;
-                    break;
+            for (Contratable p : lista) {
+                if(p instanceof Amateur || p instanceof Profesional) {
+                    if (((Actor) p).getDni().equals(dni)) {
+                        encontrado = true;
+                        break;
+                    }
                 }
             }
             return encontrado;
@@ -384,20 +524,23 @@ public class GestionDeActores {
     }
 
     private static void mostrarActoresPorNombreTipoYSueldo(){
+        System.out.println("\n------Opcion de mostrar Actores por nombre, tipo y sueldo----------");
         if(lista.isEmpty()){
             System.out.println("No hay Actores en la lista.");
         }else {
-            for (Persona p : lista) {
+            for (Contratable p : lista) {
                 if (p instanceof Amateur) {
                     System.out.println(((Amateur) p).toStringListadoYSueldo());
                 } else if (p instanceof Profesional) {
                     System.out.println(((Profesional) p).toStringListadoYSueldo());
+                }else{
+                    System.out.println(((Perro) p).toStringListadoYSueldo());
                 }
             }
         }
     }
 
-    private static Actor añadirActor() {
+    private static void añadirActor() {
         boolean salir = false;
         int tipo;
         Actor a;
@@ -406,7 +549,13 @@ public class GestionDeActores {
             tipo=introducirNumeroEntero();
         }while(!comprobarTipoActor(tipo));
         a = seleccionarOpcionCrearActor(tipo);
-        return a;
+        if(a==null){
+            System.out.println("No se ha añadido el Actor.");
+        }else {
+            System.out.println(a.toString());
+            lista.add((Contratable) a);
+            System.out.println("Se ha añadido el actor a la lista.");
+        }
     }
 
     private static Actor seleccionarOpcionCrearActor(int tipo) {
@@ -642,7 +791,7 @@ public class GestionDeActores {
         do{
             System.out.println("Introduce el codigo postal: ");
             codigoPostal = sc.nextLine();
-        }while(!comprobarDigitosCodigoPostal(codigoPostal) || !comprobarTamañoCodigoPostal(codigoPostal));
+        }while(!comprobarDigitosCodigoPostal(codigoPostal) || !comprobarTamanyoCodigoPostal(codigoPostal));
         return codigoPostal;
     }
 
@@ -657,7 +806,7 @@ public class GestionDeActores {
         return correcto;
     }
 
-    private static boolean comprobarTamañoCodigoPostal(String codigoPostal){
+    private static boolean comprobarTamanyoCodigoPostal(String codigoPostal){
         if(codigoPostal.length()!=5){
             System.out.println("No has introducido 5 digitos para el codigo postal.");
             return false;
@@ -1007,7 +1156,7 @@ public class GestionDeActores {
         String raza;
         sc.nextLine();
         do {
-            System.out.println("Introduce la raza del actor de las siguientes opciones:\n----------------------------- ");
+            System.out.println("\nIntroduce la raza del actor de las siguientes opciones:\n----------------------------- ");
             //System.out.println(Raza.CAUCASICO + " ," + Raza.HISPANO + " ," + Raza.NEGRO + " ," + Raza.ORIENTAL + " o " + Raza.ABORIGEN);
             mostrarRazas();
             raza = sc.nextLine().toUpperCase();
@@ -1128,17 +1277,18 @@ public class GestionDeActores {
         System.out.println("9 - Listado de actores de una raza.");
         System.out.println("10 - Actores superiores a una altura.");
         System.out.println("11 - Actores superiores a un peso.");
-        System.out.println("12 - Actor que más cobra");
-        System.out.println("13 - Listado alfabético de actores.\n----------------------------------------");
+        System.out.println("12 - Actor que más cobra.");
+        System.out.println("13 - Listado alfabético de actores.");
+        System.out.println("14 - Listado alfabético de perros.\n----------------------------------------");
     }
 
     private static void mostrarTodosActores(){
-        for(Actor a : lista){
+        for(Contratable a : lista){
             System.out.println(a.toString());
         }
     }
 
-    private static Actor actorAmateurPorDefecto(){
+    private static Amateur actorAmateurPorDefecto(){
         Fecha f = new Fecha(23,04,2010);
         Direccion d = new Direccion("España",34,1,'f',"45434","Elche","Alicante","España");
         return new Amateur("12345678F","Fran",f,d,Genero.HOMBRE,"565434554",87,1.7,Raza.HISPANO,60,21);
@@ -1148,5 +1298,9 @@ public class GestionDeActores {
         Fecha f = new Fecha(12,10,1992);
         Direccion d = new Direccion("Tercios",12,4,'c',"67876","Mieres","Asturias","España");
         return new Profesional("12345643J","Flavia",f,d,Genero.MUJER,"654354654",50,1.55,Raza.ORIENTAL,200,100,2);
+    }
+    private static Perro perroPorDefecto(){
+
+        return new Perro("Cora","Faus",5000,7);
     }
 }

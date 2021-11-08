@@ -1,4 +1,4 @@
-public class Profesional extends Actor{
+public class Profesional extends Actor implements Contratable{
 
     private double sueldoBase;
     private double precioPorRepresentacion;

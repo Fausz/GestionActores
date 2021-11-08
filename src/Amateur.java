@@ -1,4 +1,4 @@
-public class Amateur extends Actor{
+public class Amateur extends Actor implements Contratable{
 
     private double importeHora;
     private int numeroHoras;
@@ -133,9 +133,9 @@ public class Amateur extends Actor{
         return
                 super.toString()+
                 " tipo = AMATEUR, " +
-                "peso = " + peso +
-                ", altura = " + altura +
-                ", raza = " + raza +
+                "peso = " + getPeso() +
+                ", altura = " + getAltura() +
+                ", raza = " + getRaza() +
                 ", importeHora = " + importeHora +
                 ", numeroHoras = " + numeroHoras +
                 ", sueldo = " + sueldo;

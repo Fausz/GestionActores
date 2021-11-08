@@ -2,10 +2,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
 
-public abstract class Actor extends Persona{
-    double peso;
-    double altura;
-    Raza raza;
+public class Actor extends Persona{
+    private double peso;
+    private double altura;
+    private Raza raza;
 
     public Actor(double peso, double altura, Raza raza) {
         this.peso = peso;
@@ -20,7 +20,30 @@ public abstract class Actor extends Persona{
         this.raza = raza;
     }
 
-    public abstract double calcularSueldo();
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
+    public Raza getRaza() {
+        return raza;
+    }
+
+    public void setRaza(Raza raza) {
+        this.raza = raza;
+    }
+
     public long calcularEdad(){
         LocalDate fNacimiento;
         fNacimiento = LocalDate.of(getFechaNacimiento().getAño(), getFechaNacimiento().getMes(), getFechaNacimiento().getDia());
