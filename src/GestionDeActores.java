@@ -36,7 +36,7 @@ public class GestionDeActores {
                 System.out.println("Fin del programa.");
                 return true;
             case 1:
-                añadirActor();
+                menuCrearActor();
                 break;
             case 2:
                 menuEliminarActor();
@@ -165,6 +165,21 @@ public class GestionDeActores {
 
             }
         }
+    }
+
+    private static double introducirSueldoPerro(){
+        double sueldoPerro;
+        do {
+            System.out.println("Introduce el sueldo del Perro: ");
+            try {
+                sueldoPerro = sc.nextDouble();
+            }catch (Exception e){
+                sc.nextLine();
+                System.err.println("El valor introducido no es valido.");
+                sueldoPerro=-1;
+            }
+        }while(sueldoPerro<0);
+        return sueldoPerro;
     }
 
     private static void mostrarActorQueMasCobra() {
@@ -460,6 +475,17 @@ public class GestionDeActores {
         return new Profesional(dni, nombre, f, d, g, telefono, peso, altura, r, sueldoBase, precioPorRepresentacion, numeroRepresentaciones);
     }
 
+    private static void menuCrearActor() {
+        System.out.println("\n------Opcion de Añadir Actores----------");
+        boolean salirMenuCrear = false;
+        do {
+            mostrarMenuEleccionActor();
+            int opcion = introducirNumeroEntero();
+            salirMenuCrear = menuOpcionCrearActor(opcion);
+        } while (!salirMenuCrear);
+
+    }
+
     private static void menuEliminarActor() {
         System.out.println("\n------Opcion de Eliminar Actores----------");
         boolean salirMenuEliminar = false;
@@ -469,6 +495,22 @@ public class GestionDeActores {
             salirMenuEliminar = menuOpcionEliminarActor(opcion);
         } while (!salirMenuEliminar);
 
+    }
+
+    private static boolean menuOpcionCrearActor(int opcion) {
+        switch (opcion) {
+            case 0:
+                return true;
+            case 1:
+                crearActor();
+                break;
+            case 2:
+                crearPerro();
+                break;
+            default:
+                System.out.println("Opcion fuera de rango.");
+        }
+        return false;
     }
 
     private static boolean menuOpcionEliminarActor(int opcion) {
@@ -494,6 +536,7 @@ public class GestionDeActores {
         String nombrePerro;
         do {
             System.out.println("\nListado de Perros:\n-----------------");
+            mostrarTodosPerros();
             nombrePerro = introducirNombrePerro();
             if (nombrePerro.equals("0")) {
                 salir = true;
@@ -605,9 +648,9 @@ public class GestionDeActores {
 
     private static String introducirNombrePerro(){
         String nombrePerro;
-        mostrarTodosPerros();
+
         System.out.println("Introduce el nombre del Perro (0 para salir): ");
-        nombrePerro = sc.nextLine();
+        nombrePerro = sc.nextLine().toUpperCase();
         return nombrePerro;
     }
 
@@ -676,7 +719,66 @@ public class GestionDeActores {
         }
     }
 
-    private static void añadirActor() {
+    private static void crearPerro() {
+        sc.nextLine();
+        Perro p = new Perro();
+        String nombrePerro = "";
+        String nombreDueño = "";
+        double sueldo = 0;
+        int edad = 0;
+        boolean cancelarCreacion;
+
+        nombrePerro = introducirNombrePerro();
+        if (nombrePerro.equals("0")) {
+            System.out.println("No se ha añadido el Perro.");
+        } else {
+            nombreDueño=introducirNombreDueñoPero();
+            sueldo = introducirSueldoPerro();
+            edad = introducirEdadPerro();
+            sc.nextLine();
+            cancelarCreacion = confirmarAccion();
+            if (!cancelarCreacion) {
+                System.out.println("No se ha añadido el Perro.");
+            } else {
+                p = new Perro(nombrePerro, nombreDueño, sueldo, edad);
+                System.out.println(p.toString());
+                lista.add((Contratable) p);
+                System.out.println("Se ha añadido el perro a la lista.");
+            }
+        }
+    }
+
+    private static int introducirEdadPerro(){
+        int edad;
+        do{
+            System.out.println("Introduce la edad del Perro: ");
+            edad=introducirNumeroEntero();
+        }while (!comprobarEdadPerro(edad));
+        return edad;
+    }
+
+    private static boolean comprobarEdadPerro(int edad){
+        if(edad>=30) {
+            System.out.println("Tiempo de vida demasiado alto para un perro.");
+            return false;
+        }else if(edad<=0){
+            System.out.println("El perro aun no ha nacido.");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private static String introducirNombreDueñoPero(){
+        String nombreDueño;
+        do{
+            System.out.println("Introduce el nombre del Dueño del Perro: ");
+            nombreDueño = sc.nextLine();
+        }while(!comprobarTexto(nombreDueño));
+        return nombreDueño;
+    }
+
+    private static void crearActor() {
         boolean salir = false;
         int tipo;
         Actor a;

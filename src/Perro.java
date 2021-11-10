@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Perro implements Contratable{
 
     private String nombrePerro;
